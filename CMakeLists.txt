@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 project(myprojct CXX)
 add_compile_options(-std=c++14)
 
-find_package(PCL 1.8 REQUIRED)
+find_package(PCL 1.12 REQUIRED)
 include_directories(${PCL_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
