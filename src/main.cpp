@@ -15,14 +15,16 @@ int main(int argc, char* argv[]) {
   float voxel_size_y = atoi(argv[2]);
   float voxel_size_z = atoi(argv[3]);
 
+  pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZRGB>);
+  pcl::PointCloud<pcl::PointXYZRGB>::Ptr downsampled_cloud(new pcl::PointCloud<pcl::PointXYZRGB>);
+  pcl::io::loadPCDFile("input.pcd", *cloud);
+
   pcl::VoxelGrid<pcl::PointXYZRGB> voxel_grid;
   voxel_grid.setLeafSize(voxel_size_x, voxel_size_y, voxel_size_z);
-  pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZRGB>);
-  pcl::io::loadPCDFile("input.pcd", *cloud);
   voxel_grid.setInputCloud(cloud);
   voxel_grid.setSaveLeafLayout(true);
-  pcl::PointCloud<pcl::PointXYZRGB>::Ptr downsampled_cloud(new pcl::PointCloud<pcl::PointXYZRGB>);
   voxel_grid.filter(*downsampled_cloud);
+
   std::unordered_map<int, pcl::PointCloud<pcl::PointXYZRGB>> downsampled2restored_map;
   for (auto& point : cloud->points) {
     const int index = voxel_grid.getCentroidIndex(point);
