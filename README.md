@@ -2,7 +2,6 @@
 For https://github.com/PointCloudLibrary/pcl/issues/4895
 
 ```
-mkdir build
 cd build
 cmake ..
 make
